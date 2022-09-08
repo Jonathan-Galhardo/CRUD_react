@@ -9,7 +9,7 @@ import logoCadastro from './assets/cadastro.png'
 
 function App() {
 
-  const baseUrl = 'https://jsonplaceholder.typicode.com/posts';
+  const baseUrl = 'https://cadastrotca.azurewebsites.net/';
 
   const [data, setData] = useState([]);
   const [modalIncluir, setModalIncluir] = useState(false);
