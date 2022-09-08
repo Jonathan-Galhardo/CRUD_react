@@ -65,6 +65,27 @@ function App() {
           ))}
         </tbody>
       </table>
+
+      <Modal>
+        <ModalHeader>Incluir Novo Cliente</ModalHeader>
+        <ModalBody>
+          <div className='form-group'>
+            <label>Nome: </label>
+            <input type='text' className='form-control' />
+            <label>Email: </label>
+            <input type='text' className='form-control' />
+            <label>CPF: </label>
+            <input type='text' className='form-control' />
+            <label>Telefone: </label>
+            <input type='text' className='form-control' />
+          </div>
+        </ModalBody>
+        <ModalFooter>
+          <button className='btn btn-primary'> Incluir </button>
+          <button className='btn btn-danger'> Cancelar </button>
+        </ModalFooter>
+      </Modal>
+
     </div >
   );
 }
