@@ -13,6 +13,24 @@ function App() {
 
   const [data, setData] = useState([]);
 
+  const [clienteSelecionado, setClienteSelecionado] = useState({
+    id: '',
+    nome: '',
+    email: '',
+    cpf: '',
+    telefone: ''
+  })
+
+  const handleChange = e => {
+    const { name, value } = e.target;
+    setClienteSelecionado({
+      ...clienteSelecionado, [name]: value
+    });
+    console.log(clienteSelecionado)
+  }
+
+
+
   const pedidoGet = async () => {
     await axios.get(baseUrl)
       .then(response => {
@@ -71,13 +89,13 @@ function App() {
         <ModalBody>
           <div className='form-group'>
             <label>Nome: </label>
-            <input type='text' className='form-control' />
+            <input type='text' className='form-control' name='nome' onChange={{ handleChange }} />
             <label>Email: </label>
-            <input type='text' className='form-control' />
+            <input type='text' className='form-control' name='email' onChange={{ handleChange }} />
             <label>CPF: </label>
-            <input type='text' className='form-control' />
+            <input type='text' className='form-control' name='cpf' onChange={{ handleChange }} />
             <label>Telefone: </label>
-            <input type='text' className='form-control' />
+            <input type='text' className='form-control' name='telefone' onChange={{ handleChange }} />
           </div>
         </ModalBody>
         <ModalFooter>
