@@ -9,7 +9,7 @@ import logoCadastro from './assets/cadastro.png'
 
 function App() {
 
-  const baseUrl = 'https://cadastrotca.azurewebsites.net/api/pessoa';
+  const baseUrl = 'https://jsonplaceholder.typicode.com/posts';
 
   const [data, setData] = useState([]);
 
@@ -29,7 +29,7 @@ function App() {
 
 
   return (
-    <div className="App">
+    <div className="cliente__container">
       <br />
       <h3>Cadastro Clientes</h3>
       <header className="App-header">
@@ -44,8 +44,7 @@ function App() {
             <th>E-mail</th>
             <th>CPF</th>
             <th>Telefone</th>
-            <th><button className='btn btn-primary'>Editar</button></th>
-            <th><button className='btn btn-danger'>Excluir</button></th>
+
 
           </tr>
         </thead>
@@ -54,10 +53,12 @@ function App() {
           {data.map(pessoa => (
             <tr key={pessoa.id}>
               <td>{pessoa.id}</td>
-              <td>{pessoa.cpf}</td>
-              <td>{pessoa.nome}</td>
+              <td>{pessoa.title}</td>
+              <td>{pessoa.body}</td>
               <td>{pessoa.email}</td>
               <td>{pessoa.telefone}</td>
+              <th><button className='btn btn-primary'>Editar</button></th>
+              <th><button className='btn btn-danger'>Excluir</button></th>
 
 
             </tr>
