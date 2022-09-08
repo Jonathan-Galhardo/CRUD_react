@@ -12,6 +12,7 @@ function App() {
   const baseUrl = 'https://jsonplaceholder.typicode.com/posts';
 
   const [data, setData] = useState([]);
+  const [modalIncluir, setModalIncluir] = useState(false);
 
   const [clienteSelecionado, setClienteSelecionado] = useState({
     id: '',
@@ -21,6 +22,10 @@ function App() {
     telefone: ''
   })
 
+  // eslint-disable-next-line no-unused-vars
+  const openCloseModalIncluir = () => {
+    setModalIncluir(!modalIncluir);
+  }
   const handleChange = e => {
     const { name, value } = e.target;
     setClienteSelecionado({
@@ -28,8 +33,6 @@ function App() {
     });
     console.log(clienteSelecionado)
   }
-
-
 
   const pedidoGet = async () => {
     await axios.get(baseUrl)
@@ -40,11 +43,21 @@ function App() {
       })
   }
 
+  const pedidoPost = async () => {
+    delete clienteSelecionado.id;
+    await axios.post(baseUrl, clienteSelecionado)
+      .then(response => {
+        setData(data.concat(response.data));
+        openCloseModalIncluir();
+      }).catch(error => {
+        console.log(error);
+      })
+  }
+
+
   useEffect(() => {
     pedidoGet();
   })
-
-
 
   return (
     <div className="cliente__container">
@@ -52,7 +65,7 @@ function App() {
       <h3>Cadastro Clientes</h3>
       <header className="App-header">
         <img src={logoCadastro} alt="Cadastro" />
-        <button className='btn btn-success'>Incluir novo Cliente</button>
+        <button className='btn btn-success' onClick={() => openCloseModalIncluir()}>Incluir novo Cliente</button>
       </header>
       <table className='table table-bordered '>
         <thead>
@@ -84,7 +97,7 @@ function App() {
         </tbody>
       </table>
 
-      <Modal>
+      <Modal isOpen={modalIncluir}>
         <ModalHeader>Incluir Novo Cliente</ModalHeader>
         <ModalBody>
           <div className='form-group'>
@@ -99,8 +112,8 @@ function App() {
           </div>
         </ModalBody>
         <ModalFooter>
-          <button className='btn btn-primary'> Incluir </button>
-          <button className='btn btn-danger'> Cancelar </button>
+          <button className='btn btn-primary' onClick={() => pedidoPost()}> Incluir </button>
+          <button className='btn btn-danger' onClick={() => openCloseModalIncluir()}> Cancelar </button>
         </ModalFooter>
       </Modal>
 
