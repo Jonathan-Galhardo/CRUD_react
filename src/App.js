@@ -4,21 +4,24 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import axios from 'axios';
 import { Modal, ModalBody, ModalFooter, ModalHeader } from "reactstrap";
 import logoCadastro from './assets/cadastro.png'
+//import ReactDom from 'react-dom'
 
 
 
 function App() {
 
-  const baseUrl = 'https://cadastrotca.azurewebsites.net/';
+  const api = axios.create({
+    baseURL: 'https://cadastrotca.azurewebsites.net/api/Pessoa/3'
+  });
 
   const [data, setData] = useState([]);
   const [modalIncluir, setModalIncluir] = useState(false);
 
   const [clienteSelecionado, setClienteSelecionado] = useState({
     id: '',
+    cpf: '',
     nome: '',
     email: '',
-    cpf: '',
     telefone: ''
   })
 
@@ -35,7 +38,7 @@ function App() {
   }
 
   const pedidoGet = async () => {
-    await axios.get(baseUrl)
+    await axios.get(api)
       .then(response => {
         setData(response.data)
       }).catch(error => {
@@ -45,12 +48,13 @@ function App() {
 
   const pedidoPost = async () => {
     delete clienteSelecionado.id;
-    await axios.post(baseUrl, clienteSelecionado)
+    await axios.post(api, clienteSelecionado)
       .then(response => {
         setData(data.concat(response.data));
         openCloseModalIncluir();
       }).catch(error => {
         console.log(error);
+        console.log('erro aqui');
       })
   }
 
@@ -84,8 +88,8 @@ function App() {
           {data.map(pessoa => (
             <tr key={pessoa.id}>
               <td>{pessoa.id}</td>
-              <td>{pessoa.title}</td>
-              <td>{pessoa.body}</td>
+              <td>{pessoa.cpf}</td>
+              <td>{pessoa.nome}</td>
               <td>{pessoa.email}</td>
               <td>{pessoa.telefone}</td>
               <th><button className='btn btn-primary'>Editar</button></th>
